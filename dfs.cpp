@@ -45,7 +45,7 @@ void dfs(int V)
 
 int main()
 {
-    cout << "Graphs" << endl;
+    cout << "Graphs A" << endl;
     int V = 4;
     adj = new vector<int>[V];
     addEdge(0, 1);
@@ -55,5 +55,6 @@ int main()
     addEdge(2, 3);
     addEdge(3, 3);
     dfs(V);
+    getchar();
     return 0;
 }
