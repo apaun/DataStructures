@@ -16,11 +16,18 @@ void dfsUtil(vector<bool> &visited, int u)
     visited[u] = true;
     cout << u << " ";
     vector<int>::iterator i;
-    for(i = adj[u].begin(); i != adj[u].end(); ++i)
+    // for(i = adj[u].begin(); i != adj[u].end(); ++i)
+    // {
+    //     if (visited[*i] == false)
+    //         dfsUtil(visited, *i);
+    // }
+
+    for(auto i : adj[u])
     {
-        if (visited[*i] == false)
-            dfsUtil(visited, *i);
+        if (visited[i] == false)
+            dfsUtil(visited, i);
     }
+    
 
 }
 

@@ -2,12 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build hello world",
+            "label": "build CPP File",
             "type": "shell",
             "command": "g++",
             "args": [
                 "-g",
-                "${file}"
+                "-std=c++11",
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
