@@ -15,7 +15,7 @@ void dfsUtil(vector<bool> &visited, int u)
 {
     visited[u] = true;
     cout << u << " ";
-    vector<int>::iterator i;
+    // vector<int>::iterator i;
     // for(i = adj[u].begin(); i != adj[u].end(); ++i)
     // {
     //     if (visited[*i] == false)
