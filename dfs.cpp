@@ -1,3 +1,7 @@
+/**************************************
+ * https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+ * https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/tutorial/
+ * ***********************************/
 #include<iostream>
 #include<vector>
 #include"graph.h"
@@ -15,20 +19,17 @@ void dfsUtil(vector<bool> &visited, int u)
 {
     visited[u] = true;
     cout << u << " ";
+    for(auto i : adj[u])
+    {
+        if (visited[i] == false)
+            dfsUtil(visited, i);
+    }
     // vector<int>::iterator i;
     // for(i = adj[u].begin(); i != adj[u].end(); ++i)
     // {
     //     if (visited[*i] == false)
     //         dfsUtil(visited, *i);
     // }
-
-    for(auto i : adj[u])
-    {
-        if (visited[i] == false)
-            dfsUtil(visited, i);
-    }
-    
-
 }
 
 void dfs(int V)
