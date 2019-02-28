@@ -10,7 +10,6 @@
 #include<algorithm>
 
 using namespace std;
-# define INF 0x3f3f3f3f
 
 typedef pair<int, int> pii;
 vector<pii> *adj;
@@ -27,7 +26,7 @@ void primMst(int V)
     priority_queue<pii, vector<pii>, greater<pii>> pq;
     vector<bool> marked (V, false);
     vector<int> parent (V, -1);
-    vector<int> key (V, INF);
+    vector<int> key (V, INT_MAX);
 
     pq.push(make_pair(s, 0));
     key[s] = 0;
