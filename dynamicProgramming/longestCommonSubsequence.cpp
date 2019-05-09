@@ -40,7 +40,7 @@ int LcsMemoization(const char* p, const char* q, int lenP, int lenQ)
 
 int LcsBottomUp(const char* p, const char* q, int lenP, int lenQ)
 {
-    int LcsMemo[100][100];
+    int LcsMemo[lenP + 1][lenQ + 1];
 
     for(int i = 0; i <= lenP; i++)
     {
