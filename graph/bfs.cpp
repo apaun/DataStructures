@@ -8,6 +8,7 @@
 #include"graph.h"
 using namespace std;
 
+
 vector<int> *adj;
 
 void addEdge(int u, int v)
