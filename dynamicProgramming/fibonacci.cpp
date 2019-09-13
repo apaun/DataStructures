@@ -21,7 +21,7 @@ int fibMemo(int n)
     if(n == 0 || n == 1)
         result = n;
     else
-        result = fibRecursive(n - 1) + fibRecursive(n - 2);
+        result = fibMemo(n - 1) + fibMemo(n - 2);
 
     fibMemoization[n] = result;
     result;
@@ -29,7 +29,7 @@ int fibMemo(int n)
 
 int fitTopDown(int n)
 {
-    int *fibMemo = new int[n];
+    int *fibMemo = new int[n + 1];
 
     fibMemo[0] = 0;
     fibMemo[1] = 1;
