@@ -1,7 +1,6 @@
 class treeNode
 {
 private :
-    treeNode *root;
     //treeNode *doAddNodeRecursion(treeNode *root, int data);
 
 public :
@@ -9,6 +8,7 @@ public :
     treeNode *left;
     treeNode *right;
 
+    treeNode();
     treeNode(int data);
     void addNode(int data);
     //void addNodeRecursion(int data);

@@ -9,12 +9,13 @@ int max(int m , int n)
     return m > n ? m : n;
 }
 
+treeNode *root;
+
 treeNode::treeNode(int data)
 {
     this->data = data;
     this->right = NULL;
     this->left = NULL;
-    root = this;
 }
 
 void treeNode::addNode(int data)
@@ -67,13 +68,13 @@ void treeNode::addNode(int data)
 //     return root;    
 // }
 
-int treeNode::treeHeight(treeNode *root)
+int treeNode::treeHeight(treeNode *node)
 {
-    if (root == NULL)
+    if (node == NULL)
         return 0;
 
-    int leftHeight = treeHeight(root->left);
-    int rightHeight = treeHeight(root->right);
+    int leftHeight = treeHeight(node->left);
+    int rightHeight = treeHeight(node->right);
 
     if(leftHeight > rightHeight)
         return 1 + leftHeight;
@@ -81,36 +82,36 @@ int treeNode::treeHeight(treeNode *root)
         return 1 + rightHeight;
 }
 
-int treeNode::treeDiameter(treeNode *root)
+int treeNode::treeDiameter(treeNode *node)
 {
-    if (root == NULL)
+    if (node == NULL)
         return 0;
 
-    int leftHeight = treeHeight(root->left);
-    int rightHeight = treeHeight(root->right);
+    int leftHeight = treeHeight(node->left);
+    int rightHeight = treeHeight(node->right);
 
-    int leftDiameter = treeDiameter(root->left);
-    int rightDiameter = treeDiameter(root->right);
+    int leftDiameter = treeDiameter(node->left);
+    int rightDiameter = treeDiameter(node->right);
 
     return max(leftHeight + rightHeight + 1, max(leftDiameter, rightDiameter));
 }
 
-void treeNode::dfs(treeNode* root)
+void treeNode::dfs(treeNode* node)
 {
-    if (root == NULL)
+    if (node == NULL)
         return;
-    dfs(root->left);
-    cout << root->data << " ";
-    dfs(root->right);
+    dfs(node->left);
+    cout << node->data << " ";
+    dfs(node->right);
 }
 
-void treeNode::bfs(treeNode* root)
+void treeNode::bfs(treeNode* node)
 {
-    if (root== NULL)
+    if (node== NULL)
         cout << "Tree is empty";
     
     queue<treeNode*> q;
-    q.push(root);
+    q.push(node);
 
     while(!q.empty())
     {
@@ -126,7 +127,7 @@ void treeNode::bfs(treeNode* root)
     }
 }
 
-void treeNode::levelOrderSpiral(treeNode* root)
+void treeNode::levelOrderSpiral(treeNode* node)
 {
     if (root== NULL)
         cout << "Tree is empty";
@@ -134,7 +135,7 @@ void treeNode::levelOrderSpiral(treeNode* root)
     stack<treeNode*> s1;
     stack<treeNode*> s2;
 
-    s1.push(root);
+    s1.push(node);
 
     while(!s1.empty() || !s2.empty())
     {
@@ -167,18 +168,18 @@ void treeNode::levelOrderSpiral(treeNode* root)
     
 }
 
-bool treeNode::printAncestor(treeNode* root, int target)
+bool treeNode::printAncestor(treeNode* node, int target)
 {
 
-    if (root == NULL)
+    if (node == NULL)
         return false;
     
-    if(root->data == target)
+    if(node->data == target)
         return true;
     
-    if(printAncestor(root->left, target) || printAncestor(root->right, target))
+    if(printAncestor(node->left, target) || printAncestor(node->right, target))
     {
-        cout << root->data << " ";
+        cout << node->data << " ";
         return true; 
     }
 
@@ -186,86 +187,86 @@ bool treeNode::printAncestor(treeNode* root, int target)
     return false;
 }
 
-treeNode* treeNode::LCA(treeNode *root, int n1, int n2)
+treeNode* treeNode::LCA(treeNode *node, int n1, int n2)
 {
-    if (root == NULL)
+    if (node == NULL)
         return NULL;
 
-    if (root->data == n1 || root->data == n2)
-        return root;
+    if (node->data == n1 || node->data == n2)
+        return node;
 
-    auto leftLCA = LCA(root->left, n1, n2);
-    auto rightLCA = LCA(root->right, n1, n2);
+    auto leftLCA = LCA(node->left, n1, n2);
+    auto rightLCA = LCA(node->right, n1, n2);
 
     if (leftLCA && rightLCA)
-        return root;
+        return node;
 
     return leftLCA != NULL ? leftLCA : rightLCA;
 }
 
-int nodeLevelUtil(treeNode* root,int target,int level)
+int nodeLevelUtil(treeNode* node,int target,int level)
 {
-    if(root == NULL)
+    if(node == NULL)
         return 0;
     
-    if(root->data == target)
+    if(node->data == target)
         return level;
     
-    int downlevel = nodeLevelUtil(root->left, target, level + 1);
+    int downlevel = nodeLevelUtil(node->left, target, level + 1);
     if (downlevel != 0)
         return downlevel;
 
-    downlevel = nodeLevelUtil(root->right, target, level + 1);
+    downlevel = nodeLevelUtil(node->right, target, level + 1);
 
     return downlevel;
 
 }
 
-int treeNode::nodeLevel(treeNode* root, int target)
+int treeNode::nodeLevel(treeNode* node, int target)
 {
-    return nodeLevelUtil(root, target, 1);
+    return nodeLevelUtil(node, target, 1);
 }
 
 int main()
 {
 
     cout << "Trees" << endl;
-    treeNode *tree1 = new treeNode(10);
-    tree1->addNode(20);
-    tree1->addNode(5);
-    tree1->addNode(6);
-    tree1->addNode(4);
-    tree1->addNode(15);
+    root = new treeNode(10);
+    root->addNode(20);
+    root->addNode(5);
+    root->addNode(6);
+    root->addNode(4);
+    root->addNode(15);
 
-    cout << tree1->left->data << endl;
-    cout << tree1->left->left->data << endl;
-    cout << tree1->right->data << endl;
+    cout << root->left->data << endl;
+    cout << root->left->left->data << endl;
+    cout << root->right->data << endl;
 
-    cout << "Height of tree is " << tree1->treeHeight(tree1) << endl;  
-    cout << "Diameter of tree is " << tree1->treeDiameter(tree1) << endl;  
+    cout << "Height of tree is " << root->treeHeight(root) << endl;  
+    cout << "Diameter of tree is " << root->treeDiameter(root) << endl;  
     cout << "DFS of tree is ";
-    tree1->dfs(tree1);
+    root->dfs(root);
     cout << endl;
 
     cout << "BFS of tree is ";
-    tree1->bfs(tree1);
+    root->bfs(root);
     cout << endl;
 
     cout << "Spiral of tree is ";
-    tree1->levelOrderSpiral(tree1);
+    root->levelOrderSpiral(root);
     cout << endl;
 
     int target = 6;
     cout << "Ancestors of node " << target << " is " ;
-    tree1->printAncestor(tree1, target);
+    root->printAncestor(root, target);
     cout << endl;
 
     int n1 = 4;
     int n2 = 6;
 
-    cout << "LCA of " << n1 << " and " << n2 << " is " << tree1->LCA(tree1, n1, n2)->data << endl;
+    cout << "LCA of " << n1 << " and " << n2 << " is " << root->LCA(root, n1, n2)->data << endl;
 
-    cout << "Level of " << n1 << " is " << tree1->nodeLevel(tree1, n1) << endl;
+    cout << "Level of " << n1 << " is " << root->nodeLevel(root, n1) << endl;
 
     
     
