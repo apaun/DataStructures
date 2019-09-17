@@ -1,6 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include <functional>
+#include <map>
+#include <list>
 
 using namespace std;
 
@@ -29,16 +31,21 @@ void printCombination(T set[], int setLength, int subSetLength, T subSet[], int 
 } 
 
 
-void permute(string a, int l, int r)
+void permute(string a, int l, int r, list<string> &resultMap)
 {
     if (l == r)
-        cout << a << endl;
+    {
+        if (find(resultMap.begin(), resultMap.end(), a) == resultMap.end())
+        {
+            resultMap.push_back(a);
+        }
+    }
     else
     {
         for(int i = l; i <= r; i++)
         {
             swap(a[l], a[i]);
-            permute(a, l + 1, r);
+            permute(a, l + 1, r, resultMap);
             swap(a[l], a[i]);
         }
     }
@@ -56,7 +63,7 @@ int main()
 
     printCombination<int>(arr, setLength, r, subSet, 0, 0);
 
-    string someString = "abc";
+    string someString = "aabc";
     int stringLength = someString.length();
     char *abc = new char[stringLength];
     for(int i = 0; i < stringLength; i++)
@@ -68,9 +75,17 @@ int main()
     sort(abc, abc + stringLength);
     printCombination<char>(abc, stringLength, 2, subSetString, 0, 0);
 
+    list<string> resultMap;
     cout << "Permute" << endl;
-    permute(someString, 0, stringLength - 1);
-    
+    permute(someString, 0, stringLength - 1, resultMap);
+
+    cout << "Here" << endl;
+    for(auto i : resultMap)
+    {
+        cout << i << endl;
+    }
+
+
     return 0;
 }
 

@@ -2,9 +2,12 @@
 
 using namespace std;
 
-int *fibMemoization;
+unsigned long long *fibMemoization;
 
-int fibRecursive(int n)
+const long MOD = 1000000007;
+
+template <typename T>
+T fibRecursive(T n)
 {
     if(n == 0 || n == 1)
         return n;
@@ -12,12 +15,13 @@ int fibRecursive(int n)
         return fibRecursive(n - 1) + fibRecursive(n - 2);
 }
 
-int fibMemo(int n)
+template <typename T>
+T fibMemo(T n)
 {
     if(fibMemoization[n] != -1)
         return fibMemoization[n];
 
-    int result = 0;
+    T result = 0;
     if(n == 0 || n == 1)
         result = n;
     else
@@ -27,14 +31,15 @@ int fibMemo(int n)
     result;
 }
 
-int fitTopDown(int n)
+template <typename T>
+T fitTopDown(T n)
 {
-    int *fibMemo = new int[n + 1];
+    T *fibMemo = new T[n + 1];
 
     fibMemo[0] = 0;
     fibMemo[1] = 1;
 
-    for(int i = 2; i <= n; i++)
+    for(T i = 2; i <= n; i++)
     {
         fibMemo[i] = fibMemo[i - 1] + fibMemo[i - 2];
     }
@@ -42,21 +47,62 @@ int fitTopDown(int n)
     return fibMemo[n];
 }
 
+template <typename T>
+void multiply(T F[2][2], T M[2][2])
+{
+    T c00 = (F[0][0] * M[0][0] + F[0][1] * M[1][0]) % MOD;
+    T c01 = (F[0][0] * M[0][1] + F[0][1] * M[1][1]) % MOD;
+    T c10 = (F[1][0] * M[0][0] + F[1][1] * M[1][0]) % MOD ;
+    T c11 = (F[1][0] * M[0][1] + F[1][1] * M[1][1]) % MOD;
+
+    F[0][0] = c00;
+    F[0][1] = c01;
+    F[1][0] = c10;
+    F[1][1] = c11;
+
+}
+
+template <typename T>
+void power(T F[2][2], T n)
+{
+    if(n == 0 || n == 1)
+        return;
+
+    T M[2][2] = {{ 1, 1}, {1, 0}};
+
+    power(F, n / 2);
+    multiply(F , F);
+
+    if (n % 2 == 1)
+        multiply(F, M);
+}
+
+template <typename T>
+T fibMatrixExponential(T n)
+{
+    if (n == 0)
+        return 1;
+
+    T Fib[2][2] = {{ 1, 1}, {1, 0}};
+
+    power(Fib, n - 1);
+
+    return Fib[0][0] % MOD;
+}
+
 
 int main()
 {
-    int n = 9;
+    unsigned long long n;
+    cout << "Enter number : ";
+    cin >> n;
 
-    fibMemoization = new int[n];
+    fibMemoization = new unsigned long long[n];
 
-    for(int i = 0; i <= n; i++)
-    {
-        fibMemoization[i] = -1;
-    }
-
-    cout << "Fib Recursive is " << fibRecursive(n) << endl;
-    cout << "Fib Memo is " << fibMemo(n) << endl;
-    cout << "Fib Top Down is " << fitTopDown(n) << endl;
+   // cout << "Fib Recursive is " << fibRecursive(n) << endl;
+    //cout << "Fib Memo is " << fibMemo(n) << endl;
+    cout << "Fib Top Down is " << fitTopDown<unsigned long long>(n) << endl;
+    cout << "Fib Matrix Exponential is " << fibMatrixExponential<unsigned long long>(n) << endl;
 
 
     return 0;
