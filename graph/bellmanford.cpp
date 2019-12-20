@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////
+// Given a graph and a source vertex src in graph, 
+// find shortest paths from src to all vertices in the given graph. 
+// The graph may contain negative weight edges.
+/////////////////////////////////////////////////////////
+
 #include<iostream>
 #include<vector>
 #include"graph.h"
