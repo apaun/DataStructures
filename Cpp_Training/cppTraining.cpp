@@ -1045,6 +1045,245 @@ Lambda example - []() mutable throw() { };
 see Day3\lambda2.cpp
 see Day3\lambda3.cpp
 
+--------------------------------------------
+CLASS FEATURES
+--------------------------------------------
+1) In-class initializer for non-static data memebers
+
+Traditional world:-
+class CA
+{
+private:
+    int a;
+    float b;
+public:
+}
+
+// Modern world :- 
+// direclty can provide value to class memebers
+class CA
+{
+private:
+    int a { };
+    int b {10};
+    int sum = a + b; 
+public:
+}
+
+CA() = default -> generate default constructor
+
+2) delegating constructors
+
+class CA{
+private:
+    CA(int x, int y) {
+
+    }
+public:
+    CA():CA(100){ }
+    CA(int x): CA(x, y) { }
+}
+
+3) Inheriting constructors
+
+see Day3\inhertiingConstrucotrs.cpp
+
+4) Default methods
+- default cotr
+- copy ctor
+- assginment function
+
+// Traditional world
+class CA
+{
+private:
+public:
+    CA() { }
+    CA(int x) { }
+    // no copy ctor
+    // npt assignment function provided
+};
+
+complier generate ctor were always public
+
+// Modern world
+class CA
+{
+private:
+public:
+    CA() { }
+    CA(int x) { }
+    // Generate your own function under public
+    CA(const CA& x) = default;
+    CA& operator=(const CA& x) = default;
+};
+
+class CA
+{
+private:
+protected:
+    CA(const CA& x) = default;
+public:
+    CA() { }
+    CA(int x) { }
+    // Generate your own function under public
+    
+    CA& operator=(const CA& x) = default;
+};
+
+// Traditional world
+class CA
+{
+public:
+private:
+    CA(const CA& x);
+    CA& operator=(const CA& x);
+
+}
+
+// Modern world
+class CA
+{
+private:
+public:
+    CA(const CA& x) = delete;
+    CA& operator=(const CA& x)= delete;
+
+}
+
+delete method can be used with
+1) default ctor
+2) copy ctor
+3) copy assignment function
+4) move constructor
+5) move assignment function
+
+explicit keyword
+
+class CA
+{
+    private:
+    public:
+        explicit CA(int x) { } // in order to call ctor explicitly => obj1 =x; not allowed
+        void operator =(int x) { } // if you want obj1 = x; overload operator=
+        operator int() {  } // x = obj1;
+        // operator int() = delete // to now allow conversions
+};
+
+int main()
+{
+    CA obj1;
+    int x;
+
+    x = obj1; // => x = (int) obj1; == > x = obj1.operator int();
+
+}
+
+
+OVERRIDE and FINAL KEYWORD
+
+class Base
+{
+public:
+    virtual void fun1(int x) { }
+    virtual void fun2(float x) { }
+    virtual void fun3(double x) { }
+    virtual void fun4() = 0 ; // pure virtual function
+}
+
+// Traditional world
+class Derived : public Base
+{
+public:
+    void fun1(int x) { }
+    void fun2(float x) { }
+    void fun3(int x) { } // will not get override
+}
+
+//Modern world
+class Derived : public Base
+{
+public:
+    void fun1(int x) override { }
+    void fun2(float x) overrride { }
+    void fun3(int x) override { }  // will get compile time error, since there is not method in base class to override
+}
+
+
+
+----------
+class Base
+{
+public:
+    virtual void fun1(int x) { }
+    virtual void fun2(float x) { }
+    virtual void fun3(double x) { }
+    virtual void fun4() = 0 ; // pure virtual function
+};
+
+class Derived1 : public Base
+{
+
+}
+
+class Derived2 final: public Derived
+{
+    
+}
+
+class Derived1 : public Base
+{
+  public:
+    void fun1(int x) override { }
+    void fun2(float x) final overrride { }
+    void fun3(float x) override { }
+}
+
+------------------------------------
+EXTENDED FRIEND DECLARATION
+-----------------------------
+
+
+................................................................
+
+======================
+TEMPLATE FEATURES
+======================
+
+1) Default arguments for function templates
+
+
+template<typename T> void Fun(T x = 10)
+{
+     
+}
+
+2) lvalue adn rvalue
+3) perfect forwarding
+see Day\referencecollapsing.cpp
+see Day3\perfectForwarding.cpp
+
+class CA
+{
+public:
+    CA(const CA& x) { } // lvalue copy constructor
+    CA(CA&& x) { } // rvalue copy constructor / move copy constructor
+
+    CA& operator=(const CA& x) { }
+    CA& operator=(CA&& x) { } 
+
+}
+
+int main()
+{
+    CA obj1;
+    CA obj2(move(obj1)) // job of move is to convert lvalue to rvalue
+
+    obj2 = obj1; // lvaule assignment
+    obj2 = move(obj1); //rvalue assignment
+
+    return 0;
+}
 
 
 */
@@ -1070,6 +1309,4 @@ int main()
 
     auto abc = new int[5];
     return 0;
-
-
 }
