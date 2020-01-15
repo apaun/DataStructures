@@ -902,8 +902,129 @@ int main()
     x = Add(300, 42.1f);
 }
 
- 
+---------------------------------------------
+TYpe Inference - DECLTYPE
+---------------------------------------------
 
+auto x = 100;
+decltype (x) y;
+auto &z = x; int &z = x;
+decltype ((y)) ref; // int& ref; //error
+decltype ((y)) ref = x; // int& ref = x;
+--
+
+const int x = 100;
+auto y = x;
+decltype(x) y; // const int y // error
+decltype(x) y = 200 // const int y = 200; // ok
+
+
+class CA
+{
+private:
+    int a, b;
+public:
+    CA(int x = 0, int y = 0) : a(x), b(y) { }
+    void print() const 
+    {
+        cout << "CA::print() const called" << endl;
+    }
+
+    void print() const 
+    {
+        cout << "CA::print() called" << endl;
+    }
+};
+
+auto Fun()
+{
+    const CA obj1;
+    return obj1;
+}
+
+// C++ 14
+decltype(auto) Fun()
+{
+    const CA obj1;
+    return obj1;
+}
+
+int main()
+{
+    CA obj1;
+    obj1.print();
+
+    const CA obj2;
+    obj2.print();
+
+    Fun().print();
+    return 0;
+}
+
+------------------------------
+LAMBDA EXPRESSIONS
+------------------------------
+
+int main()
+{
+
+    //define lambda
+    //auto lm = []() -> void
+    function<void(void)> lm = []() -> void
+    {
+        cout << __FUNCSIG__ << endl;
+        cout << "lambda called" << endl;
+    };
+
+    lm();
+
+    return 0;
+
+}
+
+auto lm = []()
+{
+    cout << "lambda called" << endl;
+};
+
+function<void(void)> lm = []() { }
+
+
+--------------------------
+Function object
+--------------------------
+
+template<typename T> class Func
+{
+
+private:
+    T *fp;
+
+public:
+    Func(T* ff) : fp(ff) { }
+
+    template<typename DATA> void operator()(DATA d)
+    {
+        (*fp)(d);
+    }
+};
+
+void fun1() { cout << "Fun1" << endl; }
+void fun2(int x) { cout << x << endl; }
+
+int main()
+{
+    Func<void(void)> obj1(&fun1); //void(*fp)()
+    obj1();
+    Func<void(int)> obj2(&fun2); //void(*fp)(int)
+
+    return 0;
+}
+
+*/
+
+/*
+=================DAY 3=========================
 
 */
 
