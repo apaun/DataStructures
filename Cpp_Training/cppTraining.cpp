@@ -581,7 +581,7 @@ int main()
     return 0;
 }
 
-FUNCTOR
+FUNCTOR - if a class memeber has operator() overloaded, then the class is functor
 
 #include<iostream>
 #include<list>
@@ -596,7 +596,7 @@ public :
     void print const() { cout << a << " " << b << endl; }
 
     // Functor
-    void operator()(CA &x) const() { cout << x.a << " " << x,b << endl; }
+    void operator()(CA &x) const { cout << x.a << " " << x,b << endl; }
 };
 
 void Print(const CA &x)
@@ -987,7 +987,7 @@ auto lm = []()
     cout << "lambda called" << endl;
 };
 
-function<void(void)> lm = []() { }
+function<void(void)> lm = []() { };
 
 
 --------------------------
@@ -1025,6 +1025,27 @@ int main()
 
 /*
 =================DAY 3=========================
+Lambda example - []() mutable throw() { };
+
+[] -> lambda introducer/capture clause
+() -> lambda declator / parameter list
+
+
+[] - lambda does not access enclosing scope
+[=] - capture everything by value
+[&] - capture everything by reference
+[x, &y] - x by value, y by reference
+[&, z] - all by reference except z by value
+
+- parameter of lambda expression cannot take default arguments
+- not variable length arguments
+- no un-named parameters
+- cannot use 'auto' specifiers for a class data members if its kambda
+
+see Day3\lambda2.cpp
+see Day3\lambda3.cpp
+
+
 
 */
 
