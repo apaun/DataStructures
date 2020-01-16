@@ -1285,6 +1285,34 @@ int main()
     return 0;
 }
 
+// CA Move only type
+class CA
+{
+public:
+    CA(const CA&) = delete;
+    CA& operator=(const CA& ) = delete;
+
+    CA(CA&& x) { }
+    CA& operator=(CA&& x) { }
+}
+
+
+---------------
+VARIADIC
+---------------
+
+template<typename... PACK> void fun(PACK... data)
+{
+
+}
+
+fun(100);
+fun(10, 20);
+
+--------------------------
+VARIADIC CLASS TEMPLATES
+--------------------------
+
 
 */
 
