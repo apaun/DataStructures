@@ -54,6 +54,7 @@ int main()
     addEdge(2, 3); 
     addEdge(3, 3);
     bfs(2, V);
-    getchar();
+    
+    delete [] adj;
     return 0;
 }
