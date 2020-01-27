@@ -10,7 +10,7 @@
                 "-std=c++14",
                 "${file}",
                 "-o",
-                "${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",

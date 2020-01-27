@@ -37,7 +37,7 @@ int knapSackBottomUp(const int *v, const int *w, int n, int weight)
                 knapSackMemo[i][j] = max(tmp1, tmp2);
             }
             else
-                knapSackMemo[i][j] = knapSackMemo[i - 1][weight];
+                knapSackMemo[i][j] = knapSackMemo[i - 1][j];
         }
     }
 
