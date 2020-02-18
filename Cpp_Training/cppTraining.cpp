@@ -1316,6 +1316,47 @@ VARIADIC CLASS TEMPLATES
 
 */
 
+/*
+
+==============================
+DAY 5
+==============================
+
+--------------------------
+VARIADIC CLASS TEMPLATES
+--------------------------
+
+
+
+--------------------
+Libraris
+--------------------
+
+#include<memory>
+
+1) unique_ptr -> move only type
+2) shared_ptr
+3) weak_ptr
+
+unique_ptr<int> p4 = new (nothrow) int(100);
+unique_ptr<int> p4 = make_unique<int>(100);
+unique_ptr<CA> p5 = make_unique<CA>(10, 20);
+unique_ptr<CA> p6(p5); // flag error; - lvalue copy construction is not supported
+unique_ptr<CA> p6(std::move(p5)); // OK - rvalue or move copy constructor
+
+
+shared_ptr<CA> s2(s1);
+shared_ptr<CA> s1 = make_shared<CA>();
+
+
+=======================
+Multithreading
+=======================
+
+
+
+*/
+
 #include <iostream>
 
 using namespace std;
